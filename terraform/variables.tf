@@ -3,6 +3,12 @@ variable "aws_region" {
   default     = "us-east-2"
 }
 
+variable "aws_azs" {
+  description = "The availability zones in the AWS region"
+  type        = list(string)
+  default     = ["a", "b", "c"]
+}
+
 variable "unique_identifier" {
   description = "A unique identifier for naming resources to avoid name collisions"
   validation {

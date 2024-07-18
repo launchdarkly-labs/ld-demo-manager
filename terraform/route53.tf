@@ -3,5 +3,5 @@ resource "aws_route53_record" "builder-record" {
   name    = var.dns_hostname
   type    = "CNAME"
   ttl     = "300"
-  records = [aws_instance.builder-server.public_dns]
+  records = [aws_lb.builder-lb.dns_name]
 }

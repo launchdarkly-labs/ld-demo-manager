@@ -1,20 +1,13 @@
 from flask import Flask, render_template, redirect, url_for, session, request
-
-from google.oauth2.credentials import Credentials
-from google_auth_oauthlib.flow import Flow
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 
-CLIENT_ID = ""
-CLIENT_SECRET = ""
-CLIENT_SECRET_FILE = "secrets.json"
+CLIENT_SECRET_FILE = "/opt/secrets/secrets.json"
 SCOPES = [
     "openid",
     "https://www.googleapis.com/auth/userinfo.email",
     "https://www.googleapis.com/auth/userinfo.profile",
 ]
-
-AUTH_URL = "https://accounts.google.com/o/oauth2/auth"
 
 app = Flask(__name__)
 
@@ -49,7 +42,7 @@ def authorize():
     )
 
     # Save the state so we can verify the request later
-    session["state"] = state
+    # session["state"] = state
 
     return redirect(authorization_url)
 
@@ -57,12 +50,12 @@ def authorize():
 @app.route("/callback")
 def callback():
     # Verify the request state
-    if request.args.get("state") != session["state"]:
-        raise Exception("Invalid state")
+    # if request.args.get("state") != session["state"]:
+    #     raise Exception("Invalid state")
 
     # Create the OAuth flow object
     flow = InstalledAppFlow.from_client_secrets_file(
-        CLIENT_SECRET_FILE, scopes=SCOPES, state=session["state"]
+        CLIENT_SECRET_FILE, scopes=SCOPES  # , state=session["state"]
     )
     flow.redirect_uri = url_for("callback", _external=True)
 
@@ -86,6 +79,9 @@ def hello_world():
 
 
 if __name__ == "__main__":
-    app.secret_key = "super secret key"
+    FLASK_KEY = "generic"
+    with open("/opt/secrets/flaskkey.txt", "r") as f:
+        FLASK_KEY = f.read().strip()
+    app.secret_key = FLASK_KEY
     app.config["SESSION_TYPE"] = "cachelib"
     app.run(host="0.0.0.0", port=443)

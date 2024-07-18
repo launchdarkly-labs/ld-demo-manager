@@ -1,9 +1,11 @@
 resource "aws_instance" "builder-server" {
-  ami                    = data.aws_ami.ubuntu.id
-  instance_type          = "t3.micro"
-  key_name               = var.key_pair
-  iam_instance_profile   = aws_iam_instance_profile.builder-main-profile.id
-  vpc_security_group_ids = [aws_security_group.builder-server-sg.id]
+  ami                         = data.aws_ami.ubuntu.id
+  instance_type               = "t3.micro"
+  key_name                    = var.key_pair
+  iam_instance_profile        = aws_iam_instance_profile.builder-main-profile.id
+  vpc_security_group_ids      = [aws_security_group.builder-server-sg.id]
+  subnet_id                   = aws_subnet.public-subnet[0].id
+  associate_public_ip_address = true
   user_data = templatefile("${path.module}/scripts/install.sh", {
     AWS_REGION        = var.aws_region
     LD_API_KEY        = var.ld_api_key
@@ -20,7 +22,7 @@ resource "aws_instance" "builder-server" {
 resource "aws_security_group" "builder-server-sg" {
   name        = "${var.unique_identifier}-server-sg"
   description = "Builder server security group"
-  vpc_id      = data.aws_vpc.primary-vpc.id
+  vpc_id      = aws_vpc.primary-vpc.id
 
   ingress {
     from_port   = 22

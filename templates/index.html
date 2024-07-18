@@ -8,7 +8,12 @@
 </head>
 
 <body class="m-3">
-    <div class="is-size-2 has-text-weight-bold">Demo Builder</div>
+    <section class="hero">
+        <div class="hero-body">
+            <p class="title">Demo Builder</p>
+        </div>
+    </section>
+    <!-- <div class="is-size-2 has-text-weight-bold">Demo Builder</div> -->
     {% if "credentials" not in session %}
     <button class="button mt-3 is-primary" onclick="location.href='/login';">Login</button>
     {% else %}

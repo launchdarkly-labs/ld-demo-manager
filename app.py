@@ -1,6 +1,11 @@
-from flask import Flask, render_template, redirect, url_for, session, request
+from flask import Flask, render_template, redirect, session, request
+from flask_session import Session
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
+import requests
+import os
+import signal
+import sys
 
 CLIENT_SECRET_FILE = "/opt/secrets/secrets.json"
 SCOPES = [
@@ -9,7 +14,20 @@ SCOPES = [
     "https://www.googleapis.com/auth/userinfo.profile",
 ]
 
+os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 app = Flask(__name__)
+app.config["SESSION_TYPE"] = "cachelib"
+Session(app)
+
+
+def shut_down(signum, frame):
+    print("[runtime] SIGTERM received")
+    print("[runtime] exiting")
+    sys.exit(0)
+
+
+signal.signal(signal.SIGTERM, shut_down)
+signal.signal(signal.SIGINT, shut_down)
 
 
 def credentials_to_dict(credentials):
@@ -24,6 +42,21 @@ def credentials_to_dict(credentials):
     }
 
 
+def build_url(path):
+    return f"https://demobuilder.launchdarklydemos.com/{path}"
+
+
+@app.route("/logout")
+def logout():
+    response = requests.post(
+        "https://accounts.google.com/o/oauth2/revoke?token="
+        + session["credentials"]["token"]
+    )
+    session.pop("credentials")
+    session.pop("user")
+    return redirect("/")
+
+
 @app.route("/login")
 def login():
     if "credentials" not in session:
@@ -36,9 +69,9 @@ def login():
 def authorize():
     # Create the OAuth flow object
     flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRET_FILE, scopes=SCOPES)
-    flow.redirect_uri = url_for("callback", _external=True)
+    flow.redirect_uri = build_url("callback")
     authorization_url, state = flow.authorization_url(
-        access_type="offline", prompt="select_account"
+        access_type="offline", prompt="select_account", include_granted_scopes="true"
     )
 
     # Save the state so we can verify the request later
@@ -57,7 +90,7 @@ def callback():
     flow = InstalledAppFlow.from_client_secrets_file(
         CLIENT_SECRET_FILE, scopes=SCOPES  # , state=session["state"]
     )
-    flow.redirect_uri = url_for("callback", _external=True)
+    flow.redirect_uri = build_url("callback")
 
     # Exchange the authorization code for an access token
     authorization_response = request.url
@@ -70,12 +103,14 @@ def callback():
     user_info = client.userinfo().get().execute()
     session["user"] = user_info
 
-    return redirect(url_for("/"))
+    return redirect(build_url("/"))
 
 
 @app.route("/")
 def hello_world():
-    return render_template("index.html", data=session.get("user"))
+    return render_template(
+        "index.html", data=session.get("user"), creds=session.get("credentials")
+    )
 
 
 if __name__ == "__main__":
@@ -83,5 +118,4 @@ if __name__ == "__main__":
     with open("/opt/secrets/flaskkey.txt", "r") as f:
         FLASK_KEY = f.read().strip()
     app.secret_key = FLASK_KEY
-    app.config["SESSION_TYPE"] = "cachelib"
-    app.run(host="0.0.0.0", port=443)
+    app.run(host="0.0.0.0", port=80)

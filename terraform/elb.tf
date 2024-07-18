@@ -2,7 +2,7 @@ resource "aws_lb" "builder-lb" {
   name               = "demo-builder-lb"
   internal           = false
   load_balancer_type = "application"
-  security_groups    = [aws_security_group.builder-server-sg.id]
+  security_groups    = [aws_security_group.builder-lb-sg.id]
   subnets            = [for subnet in aws_subnet.public-subnet : subnet.id]
 
   enable_deletion_protection = false
@@ -22,7 +22,7 @@ resource "aws_lb_target_group" "builder-tg" {
 resource "aws_lb_target_group_attachment" "builder-tg-add-1" {
   target_group_arn = aws_lb_target_group.builder-tg.arn
   target_id        = aws_instance.builder-server.id
-  port             = 443
+  port             = 80
 }
 
 resource "aws_lb_listener" "builder-lb-listener" {
@@ -35,5 +35,29 @@ resource "aws_lb_listener" "builder-lb-listener" {
   default_action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.builder-tg.arn
+  }
+}
+
+resource "aws_security_group" "builder-lb-sg" {
+  name        = "${var.unique_identifier}-lb-sg"
+  description = "Builder LB security group"
+  vpc_id      = aws_vpc.primary-vpc.id
+
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    owner = var.owner
   }
 }

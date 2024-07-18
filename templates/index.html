@@ -7,7 +7,13 @@
 
 <body>
     <h1>Welcome!</h1>
+    {% if "credentials" not in session %}
+    <button onclick="location.href='/login';">Login</button>
+    {% else %}
+    <button onclick="location.href='/logout';">Logout</button>
+    {% endif %}
     <p>{{data}}</p>
+    <p>{{creds}}</p>
 </body>
 
 </html>

@@ -2,18 +2,24 @@
 <html>
 
 <head>
-    <title>Home</title>
+    <title>Demo Builder</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.1/css/bulma.min.css">
+    <script src="demobuilder.js"></script>
 </head>
 
-<body>
-    <h1>Welcome!</h1>
+<body class="m-3">
+    <div class="is-size-2 has-text-weight-bold">Demo Builder</div>
     {% if "credentials" not in session %}
-    <button onclick="location.href='/login';">Login</button>
+    <button class="button mt-3 is-primary" onclick="location.href='/login';">Login</button>
     {% else %}
-    <button onclick="location.href='/logout';">Logout</button>
+    <div>Click the button below to buildout your demo environment.</div>
+    <button class="button mt-3 is-primary" onclick="demobuilder('{{email}}');" id="build_button">Build Now</button>
+    <div class="block mt-3 has-text-white has-text-weight-bold" id="current_status"></div>
+    <div class="block has-text-link" id="project_name"></div>
+    <div class="block has-text-success" id="client_id"></div>
+    <div class="block is-size-6 has-text-danger has-text-weight-bold" id="error_message"></div>
+    <button class="button mt-3 is-primary" onclick="location.href='/logout';">Logout</button>
     {% endif %}
-    <p>{{data}}</p>
-    <p>{{creds}}</p>
 </body>
 
 </html>

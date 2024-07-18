@@ -8,23 +8,32 @@
 </head>
 
 <body class="m-3">
-    <section class="hero">
+    <section class="hero is-small">
         <div class="hero-body">
             <p class="title">Demo Builder</p>
         </div>
     </section>
-    <!-- <div class="is-size-2 has-text-weight-bold">Demo Builder</div> -->
-    {% if "credentials" not in session %}
-    <button class="button mt-3 is-primary" onclick="location.href='/login';">Login</button>
-    {% else %}
-    <div>Click the button below to buildout your demo environment.</div>
-    <button class="button mt-3 is-primary" onclick="demobuilder('{{email}}');" id="build_button">Build Now</button>
-    <div class="block mt-3 has-text-white has-text-weight-bold" id="current_status"></div>
-    <div class="block has-text-link" id="project_name"></div>
-    <div class="block has-text-success" id="client_id"></div>
-    <div class="block is-size-6 has-text-danger has-text-weight-bold" id="error_message"></div>
-    <button class="button mt-3 is-primary" onclick="location.href='/logout';">Logout</button>
-    {% endif %}
+    <section class="section">
+        <div class="columns">
+            <div class="column">
+                {% if "credentials" not in session %}
+                <button class="button mt-3 is-primary" onclick="location.href='/login';">Login</button>
+                {% else %}
+                <div>Click the button below to buildout your demo environment.</div>
+                <button class="button mt-3 is-primary" onclick="demobuilder('{{email}}');" id="build_button">Build
+                    Now</button>
+                <div class="block mt-3 has-text-white has-text-weight-bold" id="current_status"></div>
+                <div class="block has-text-link" id="project_name"></div>
+                <div class="block has-text-success" id="client_id"></div>
+                <div class="block is-size-6 has-text-danger has-text-weight-bold" id="error_message"></div>
+                <button class="button mt-3 is-primary" onclick="location.href='/logout';">Logout</button>
+                {% endif %}
+            </div>
+            <div class="column">
+                <p>existing projects here</p>
+            </div>
+        </div>
+    </section>
 </body>
 
 </html>

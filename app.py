@@ -43,7 +43,10 @@ def credentials_to_dict(credentials):
 
 
 def build_url(path):
-    return f"https://demobuilder.launchdarklydemos.com/{path}"
+    new_path = path
+    if path.startswith("/"):
+        new_path = path[1:]
+    return f"https://demobuilder.launchdarklydemos.com/{new_path}"
 
 
 @app.route("/logout")
@@ -108,9 +111,7 @@ def callback():
 
 @app.route("/")
 def hello_world():
-    return render_template(
-        "index.html", data=session.get("user"), creds=session.get("credentials")
-    )
+    return render_template("index.html", data=session.get("user"))
 
 
 if __name__ == "__main__":

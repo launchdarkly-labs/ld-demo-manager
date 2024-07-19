@@ -97,7 +97,7 @@ function getProjects(email) {
         if (this.readyState == 4) {
             if (this.status == 200) {
                 var res = JSON.parse(this.responseText);
-                document.getElementById("project_list").innerHTML = this.responseText;
+                document.getElementById("project_list").innerHTML = res.body.Items;
             } else {
                 document.getElementById("project_list").innerHTML = "There was an error retrieving your projects."
             }

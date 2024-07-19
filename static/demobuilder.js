@@ -102,10 +102,10 @@ function getProjects(email) {
                 for (var i in items.Items) {
                     var tdate = Date.parse(items.Items[i].CreationDate);
                     var infoLink = "<div><a href=\"https://app.launchdarkly.com/projects/" + items.Items[i].ProjectKey + "/flags\" target=\"_blank\">" + items.Items[i].ProjectName + "</a></div>";
-                    var infoDate = "<div class=\"pl-3\">Created: " + new Date(tdate).toLocaleDateString() + "</div>";
-                    var infoClient = "<div class=\"pl-3\">Client ID: " + items.Items[i].ClientId + "</div>";
-                    var infoSdk = "<div class=\"pl-3\">SDK Key: " + items.Items[i].SdkKey + "</div>";
-                    var infoDelete = "<div class=\"pl-3\"><a href=\"#\">Delete this Project</a></div>";
+                    var infoDate = "<div class=\"pl-5\">Created: " + new Date(tdate).toLocaleDateString() + "</div>";
+                    var infoClient = "<div class=\"pl-5\">Client ID: " + items.Items[i].ClientId + "</div>";
+                    var infoSdk = "<div class=\"pl-5\">SDK Key: " + items.Items[i].SdkKey + "</div>";
+                    var infoDelete = "<div class=\"pl-5\"><a href=\"#\" class=\"has-text-warning\">Delete this Project</a></div>";
                     document.getElementById("project_list").innerHTML += "<div>" + infoLink + infoDate + infoClient + infoSdk + infoDelete + "</div>"
                 }
             } else {

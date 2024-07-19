@@ -105,8 +105,9 @@ function getProjects(email) {
                     var infoDate = "<div class=\"pl-5\">Created: " + new Date(tdate).toLocaleDateString() + "</div>";
                     var infoClient = "<div class=\"pl-5\">Client ID: " + items.Items[i].ClientId + "</div>";
                     var infoSdk = "<div class=\"pl-5\">SDK Key: " + items.Items[i].SdkKey + "</div>";
-                    var infoDelete = "<div class=\"pl-5\"><button class=\"delete is-danger\"></button><a href=\"#\" class=\"has-text-danger\">Delete this Project</a></div>";
-                    document.getElementById("project_list").innerHTML += "<div>" + infoLink + infoDate + infoClient + infoSdk + infoDelete + "</div>"
+                    var infoDelete = "<div class=\"pl-5\"><button class=\"delete is-small is-danger\">Delete this Project</button></div>";
+                    var infoSeparator = "<div class=\"pl-5\">&nbsp;</div>";
+                    document.getElementById("project_list").innerHTML += "<div>" + infoLink + infoDate + infoClient + infoSdk + infoDelete + infoSeparator + "</div>"
                 }
             } else {
                 document.getElementById("project_list").innerHTML = "There was an error retrieving your projects."

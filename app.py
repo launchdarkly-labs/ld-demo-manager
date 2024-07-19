@@ -55,8 +55,12 @@ def logout():
         "https://accounts.google.com/o/oauth2/revoke?token="
         + session["credentials"]["token"]
     )
-    session.pop("credentials")
-    session.pop("user")
+    if "credentials" in session:
+        session.pop("credentials")
+    if "credentials" in session:
+        session.pop("user")
+    if "error" in session:
+        session.pop("error")
     return redirect("/")
 
 
@@ -101,10 +105,18 @@ def callback():
 
     # Save the credentials to the session
     credentials = flow.credentials
-    session["credentials"] = credentials_to_dict(credentials)
     client = build("oauth2", "v2", credentials=credentials)
     user_info = client.userinfo().get().execute()
-    session["user"] = user_info
+    email = user_info["email"]
+    creds = credentials_to_dict(credentials)
+    if not email.endswith("@launchdarkly.com"):
+        session["error"] = "You must use a LaunchDarkly email address to log in."
+        requests.post(
+            "https://accounts.google.com/o/oauth2/revoke?token=" + creds["token"]
+        )
+    else:
+        session["credentials"] = creds
+        session["user"] = user_info
 
     return redirect(build_url("/"))
 
@@ -112,8 +124,12 @@ def callback():
 @app.route("/")
 def index():
     email = ""
+    error = ""
     if "user" in session:
         email = session.get("user")["email"]
+    if "error" in session:
+        error = session.get("error")
+        session.pop("error")
     return render_template("index.html", email=email)
 
 

@@ -166,3 +166,4 @@ cython_debug/
 *.tfstate*
 *.terraform*
 secrets.json
+.DS_Store

@@ -110,7 +110,9 @@ def callback():
 
 
 @app.route("/")
-def hello_world():
+def index():
+    data = session.get("user")
+    print(data)
     return render_template("index.html", email=session.get("user")["email"])
 
 

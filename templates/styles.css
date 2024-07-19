@@ -1,0 +1,4 @@
+#builder-card {
+    --bulma-card-color: var(--bulma-text-10);
+    --bulma-card-content-background-color: var(--bulma-text-60);
+}

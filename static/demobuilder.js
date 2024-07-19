@@ -1,3 +1,8 @@
+window.DOMContentLoaded = function () {
+    email = document.getElementById("email").value;
+    getProjects(email);
+}
+
 function demobuilder(email) {
     document.getElementById("project_name").innerHTML = "";
     document.getElementById("client_id").innerHTML = "";
@@ -6,7 +11,6 @@ function demobuilder(email) {
     var xhr = new XMLHttpRequest();
     var url = "https://2rwthfsr2g4a7uomntrgbkzymq0oxepl.lambda-url.us-east-2.on.aws/";
     document.getElementById("current_status").innerHTML = "Building your demo, please wait...";
-    //document.getElementById("build_button").disabled = true;
     disableBuild();
     xhr.open("POST", url, true);
     xhr.setRequestHeader('Content-type', 'application/json');
@@ -20,7 +24,6 @@ function demobuilder(email) {
             } else {
                 document.getElementById("current_status").innerHTML = "There was an error building the demo project."
                 document.getElementById("error_message").innerHTML = this.responseText;
-                //document.getElementById("build_button").disabled = false;
                 enableBuild();
             }
         }
@@ -42,7 +45,6 @@ function populateExp(sdkKey, projectKey) {
             } else {
                 document.getElementById("current_status").innerHTML = "There was an error populating the experiment with data."
                 document.getElementById("error_message").innerHTML = this.responseText;
-                //document.getElementById("build_button").disabled = false;
                 enableBuild();
             }
         }
@@ -65,7 +67,6 @@ function runEvals(projectKey) {
                 document.getElementById("current_status").innerHTML = "There was an error evaluating flags."
                 document.getElementById("error_message").innerHTML = this.responseText;
             }
-            //document.getElementById("build_button").disabled = false;
             enableBuild();
         }
     }
@@ -82,4 +83,23 @@ function enableBuild() {
     link = document.getElementById("builderlink");
     link.innerHTML = "Build Now";
     link.onclick = function () { demobuilder(document.getElementById("email").value); };
+}
+
+function getProjects(email) {
+    var xhr = new XMLHttpRequest();
+    var url = "https://goqtp7svxwsfbcsv7zbfkvafe40hohet.lambda-url.us-east-2.on.aws/";
+    document.getElementById("project_list").innerHTML = "Loading projects...";
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader('Content-type', 'application/json');
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            if (this.status == 200) {
+                var res = JSON.parse(this.responseText);
+                document.getElementById("project_list").innerHTML = res;
+            } else {
+                document.getElementById("project_list").innerHTML = "There was an error retrieving your projects."
+            }
+        }
+    }
+    xhr.send(JSON.stringify({ "email": email }));
 }

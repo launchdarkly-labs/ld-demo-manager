@@ -27,8 +27,8 @@ function demobuilder(email) {
                 document.getElementById("current_status").innerHTML = "There was an error building the demo project."
                 document.getElementById("error_message").innerHTML = this.responseText;
                 enableBuild();
-                getProjects(email);
             }
+            getProjects(email);
         }
     }
     xhr.send(JSON.stringify({ "action": "build", "email": email }));

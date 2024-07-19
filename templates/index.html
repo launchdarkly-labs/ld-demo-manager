@@ -34,7 +34,8 @@
                     <div class="is-size-6 has-text-danger-30 has-text-weight-bold" id="error_message"></div>
                 </div>
                 <footer class="card-footer">
-                    <a href="#" class="card-footer-item" onclick="demobuilder('{{email}}');return false;">Build
+                    <a href="#" id="builderlink" class="card-footer-item"
+                        onclick="demobuilder('{{email}}');return false;">Build
                         Now</a>
                     <a href="/logout" class="card-footer-item">Logout</a>
                 </footer>
@@ -52,6 +53,7 @@
             </div>
         </div>
     </section>
+    <input type="hidden" id="email" value="{{email}}">
 </body>
 
 </html>

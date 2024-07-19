@@ -121,7 +121,7 @@ function deleteProject(projectKey, index) {
     if (confirm("Are you sure you want to delete this project?")) {
         var xhr = new XMLHttpRequest();
         var url = "https://2rwthfsr2g4a7uomntrgbkzymq0oxepl.lambda-url.us-east-2.on.aws/";
-        document.getElementById("deletebutton" + i).innerHTML = "&nbsp&nbsp&nbsp;Deleting project...";
+        document.getElementById("deletebutton" + index).innerHTML = "&nbsp&nbsp&nbsp;Deleting project...";
         xhr.open("POST", url, true);
         xhr.setRequestHeader('Content-type', 'application/json');
         xhr.onreadystatechange = function () {

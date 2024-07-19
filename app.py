@@ -111,9 +111,10 @@ def callback():
 
 @app.route("/")
 def index():
-    data = session.get("user")
-    print(data)
-    return render_template("index.html", email=session.get("user")["email"])
+    email = ""
+    if "user" in session:
+        session.get("user")["email"]
+    return render_template("index.html", email=email)
 
 
 if __name__ == "__main__":

@@ -113,7 +113,7 @@ def callback():
 def index():
     email = ""
     if "user" in session:
-        session.get("user")["email"]
+        email = session.get("user")["email"]
     return render_template("index.html", email=email)
 
 

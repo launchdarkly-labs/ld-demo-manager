@@ -97,7 +97,17 @@ function getProjects(email) {
         if (this.readyState == 4) {
             if (this.status == 200) {
                 var res = JSON.parse(this.responseText);
-                document.getElementById("project_list").innerHTML = res.body.Items;
+                items = JSON.parse(res.body);
+                document.getElementById("project_list").innerHTML = "";
+                for (var i in items.Items) {
+                    var tdate = Date.parse(items.Items[i].CreationDate);
+                    var infoLink = "<div><a href=\"https://app.launchdarkly.com/projects/" + items.Items[i].ProjectKey + "/flags\" target=\"_blank\">" + items.Items[i].ProjectName + "</a></div>";
+                    var infoDate = "<div class=\"pl-3\">Created: " + new Date(tdate).toLocaleDateString() + "</div>";
+                    var infoClient = "<div class=\"pl-3\">Client ID: " + items.Items[i].ClientId + "</div>";
+                    var infoSdk = "<div class=\"pl-3\">SDK Key: " + items.Items[i].SdkKey + "</div>";
+                    var infoDelete = "<div class=\"pl-3\"><a href=\"#\">Delete this Project</a></div>";
+                    document.getElementById("project_list").innerHTML += "<div>" + infoLink + infoDate + infoClient + infoSdk + infoDelete + "</div>"
+                }
             } else {
                 document.getElementById("project_list").innerHTML = "There was an error retrieving your projects."
             }

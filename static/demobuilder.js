@@ -100,12 +100,12 @@ function getProjects(email) {
                 items = JSON.parse(res.body);
                 document.getElementById("project_list").innerHTML = "";
                 for (var i in items.Items) {
-                    var tdate = Date.parse(items.Items[i].CreationDate);
+                    var tdate = Date.parse(items.Items[i].Created);
                     var infoLink = "<div><a href=\"https://app.launchdarkly.com/projects/" + items.Items[i].ProjectKey + "/flags\" target=\"_blank\">" + items.Items[i].ProjectName + "</a></div>";
-                    var infoDate = "<div class=\"pl-5\">Created: " + items.Items[i].CreationDate + "</div>";
+                    var infoDate = "<div class=\"pl-5\">Created: " + new Date(tdate).toLocaleDateString() + " at " + new Date(tdate).toLocaleTimeString() + "</div>";
                     var infoClient = "<div class=\"pl-5\">Client ID: " + items.Items[i].ClientId + "</div>";
                     var infoSdk = "<div class=\"pl-5\">SDK Key: " + items.Items[i].SdkKey + "</div>";
-                    var infoDelete = "<div class=\"pl-5\"><span class=\"tag is-danger\"><button class=\"delete is-small is-danger\"></button><a href=\"#\" class=\"is-danger has-text-black\" onclick=\"deleteProject('" + items.Items[i].ProjectKey + "');return false;\">&nbsp;&nbsp;&nbsp;Delete this Project</a></span></div>";
+                    var infoDelete = "<div class=\"pl-5\"><span class=\"tag is-danger\"><button class=\"delete is-small is-danger\"></button><a href=\"#\" class=\"is-danger has-text-black\" id=\"deletebutton" + i + "\" onclick=\"deleteProject('" + items.Items[i].ProjectKey + "', " + i + ");return false;\">&nbsp;&nbsp;&nbsp;Delete this Project</a></span></div>";
                     var infoSeparator = "<div class=\"pl-5\">&nbsp;</div>";
                     document.getElementById("project_list").innerHTML += "<div>" + infoLink + infoDate + infoClient + infoSdk + infoDelete + infoSeparator + "</div>"
                 }
@@ -117,10 +117,11 @@ function getProjects(email) {
     xhr.send(JSON.stringify({ "email": email }));
 }
 
-function deleteProject(projectKey) {
+function deleteProject(projectKey, index) {
     if (confirm("Are you sure you want to delete this project?")) {
         var xhr = new XMLHttpRequest();
         var url = "https://2rwthfsr2g4a7uomntrgbkzymq0oxepl.lambda-url.us-east-2.on.aws/";
+        document.getElementById("deletebutton" + i).innerHTML = "&nbsp&nbsp&nbsp;Deleting project...";
         xhr.open("POST", url, true);
         xhr.setRequestHeader('Content-type', 'application/json');
         xhr.onreadystatechange = function () {

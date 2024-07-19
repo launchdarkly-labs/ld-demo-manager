@@ -99,15 +99,19 @@ function getProjects(email) {
                 var res = JSON.parse(this.responseText);
                 items = JSON.parse(res.body);
                 document.getElementById("project_list").innerHTML = "";
-                for (var i in items.Items) {
-                    var tdate = Date.parse(items.Items[i].Created);
-                    var infoLink = "<div><a href=\"https://app.launchdarkly.com/projects/" + items.Items[i].ProjectKey + "/flags\" target=\"_blank\">" + items.Items[i].ProjectName + "</a></div>";
-                    var infoDate = "<div class=\"pl-5\">Created: " + new Date(tdate).toLocaleDateString() + " at " + new Date(tdate).toLocaleTimeString() + "</div>";
-                    var infoClient = "<div class=\"pl-5\">Client ID: " + items.Items[i].ClientId + "</div>";
-                    var infoSdk = "<div class=\"pl-5\">SDK Key: " + items.Items[i].SdkKey + "</div>";
-                    var infoDelete = "<div class=\"pl-5\"><span class=\"tag is-danger\"><button class=\"delete is-small is-danger\"></button><a href=\"#\" class=\"is-danger has-text-black\" id=\"deletebutton" + i + "\" onclick=\"deleteProject('" + items.Items[i].ProjectKey + "', " + i + ");return false;\">&nbsp;&nbsp;&nbsp;Delete this Project</a></span></div>";
-                    var infoSeparator = "<div class=\"pl-5\">&nbsp;</div>";
-                    document.getElementById("project_list").innerHTML += "<div>" + infoLink + infoDate + infoClient + infoSdk + infoDelete + infoSeparator + "</div>"
+                if (items.Items.length == 0) {
+                    document.getElementById("project_list").innerHTML = "You have no existing projects.";
+                } else {
+                    for (var i in items.Items) {
+                        var tdate = Date.parse(items.Items[i].Created);
+                        var infoLink = "<div><a href=\"https://app.launchdarkly.com/projects/" + items.Items[i].ProjectKey + "/flags\" target=\"_blank\">" + items.Items[i].ProjectName + "</a></div>";
+                        var infoDate = "<div class=\"pl-5\">Created: " + new Date(tdate).toLocaleDateString() + " at " + new Date(tdate).toLocaleTimeString() + "</div>";
+                        var infoClient = "<div class=\"pl-5\">Client ID: " + items.Items[i].ClientId + "</div>";
+                        var infoSdk = "<div class=\"pl-5\">SDK Key: " + items.Items[i].SdkKey + "</div>";
+                        var infoDelete = "<div class=\"pl-5\"><span class=\"tag is-danger\"><button class=\"delete is-small is-danger\"></button><a href=\"#\" class=\"is-danger has-text-black\" id=\"deletebutton" + i + "\" onclick=\"deleteProject('" + items.Items[i].ProjectKey + "', " + i + ");return false;\">&nbsp;&nbsp;&nbsp;Delete this Project</a></span></div>";
+                        var infoSeparator = "<div class=\"pl-5\">&nbsp;</div>";
+                        document.getElementById("project_list").innerHTML += "<div>" + infoLink + infoDate + infoClient + infoSdk + infoDelete + infoSeparator + "</div>"
+                    }
                 }
             } else {
                 document.getElementById("project_list").innerHTML = "There was an error retrieving your projects. <a href=\"#\" onclick=\"getProjects('" + email + "');return false;\">Try again</a>";

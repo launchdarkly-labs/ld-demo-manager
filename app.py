@@ -130,7 +130,7 @@ def index():
     if "error" in session:
         error = session.get("error")
         session.pop("error")
-    return render_template("index.html", email=email)
+    return render_template("index.html", email=email, error=error)
 
 
 if __name__ == "__main__":

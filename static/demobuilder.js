@@ -20,7 +20,7 @@ function demobuilder(email) {
         if (this.readyState == 4) {
             if (this.status == 200) {
                 var res = JSON.parse(this.responseText);
-                document.getElementById("project_name").innerHTML = "Project Name: <a href=\"https://app.launchdarkly.com/projects/" + res.body.projectKey + "/flags\" target=\"_blank\">" + res.body.projectName + "</a>";
+                document.getElementById("project_name").innerHTML = "Project Name: <a class=\"has-text-link-40\" href=\"https://app.launchdarkly.com/projects/" + res.body.projectKey + "/flags\" target=\"_blank\">" + res.body.projectName + "</a>";
                 document.getElementById("client_id").innerHTML = "Client ID: " + res.body.clientId;
                 populateExp(res.body.sdkKey, res.body.projectKey);
             } else {
@@ -110,9 +110,27 @@ function getProjects(email) {
                     document.getElementById("project_list").innerHTML += "<div>" + infoLink + infoDate + infoClient + infoSdk + infoDelete + infoSeparator + "</div>"
                 }
             } else {
-                document.getElementById("project_list").innerHTML = "There was an error retrieving your projects."
+                document.getElementById("project_list").innerHTML = "There was an error retrieving your projects. <a href=\"#\" onclick=\"getProjects('" + email + "');return false;\">Try again</a>";
             }
         }
     }
     xhr.send(JSON.stringify({ "email": email }));
+}
+
+function deleteProject(projectKey) {
+    if (confirm("Are you sure you want to delete this project?")) {
+        var xhr = new XMLHttpRequest();
+        var url = "https://2rwthfsr2g4a7uomntrgbkzymq0oxepl.lambda-url.us-east-2.on.aws/";
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader('Content-type', 'application/json');
+        xhr.onreadystatechange = function () {
+            if (this.readyState == 4) {
+                if (this.status != 200) {
+                    alert("There was an error deleting the project.");
+                }
+                getProjects(document.getElementById("email").value);
+            }
+        }
+        xhr.send(JSON.stringify({ "action": "cleanup", "project-key": projectKey }));
+    }
 }

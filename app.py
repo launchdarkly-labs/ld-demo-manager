@@ -111,7 +111,7 @@ def callback():
 
 @app.route("/")
 def hello_world():
-    return render_template("index.html", data=session.get("user"))
+    return render_template("index.html", email=session.get("user")["email"])
 
 
 if __name__ == "__main__":

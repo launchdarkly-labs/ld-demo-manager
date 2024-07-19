@@ -1,7 +1,9 @@
-window.DOMContentLoaded = function () {
+document.addEventListener("DOMContentLoaded", () => {
     email = document.getElementById("email").value;
     getProjects(email);
-}
+});
+
+
 
 function demobuilder(email) {
     document.getElementById("project_name").innerHTML = "";

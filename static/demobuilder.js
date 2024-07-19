@@ -105,7 +105,7 @@ function getProjects(email) {
                     var infoDate = "<div class=\"pl-5\">Created: " + new Date(tdate).toLocaleDateString() + "</div>";
                     var infoClient = "<div class=\"pl-5\">Client ID: " + items.Items[i].ClientId + "</div>";
                     var infoSdk = "<div class=\"pl-5\">SDK Key: " + items.Items[i].SdkKey + "</div>";
-                    var infoDelete = "<div class=\"pl-5\"><span class=\"tag\"><button class=\"delete is-small is-danger\"></button><a href=\"#\" class=\"is-danger\">&nbsp;&nbsp;&nbsp;Delete this Project</a></span></div>";
+                    var infoDelete = "<div class=\"pl-5\"><span class=\"tag is-danger\"><button class=\"delete is-small is-danger\"></button><a href=\"#\" class=\"is-danger\">&nbsp;&nbsp;&nbsp;Delete this Project</a></span></div>";
                     var infoSeparator = "<div class=\"pl-5\">&nbsp;</div>";
                     document.getElementById("project_list").innerHTML += "<div>" + infoLink + infoDate + infoClient + infoSdk + infoDelete + infoSeparator + "</div>"
                 }

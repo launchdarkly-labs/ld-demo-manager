@@ -1,7 +1,7 @@
 #!/bin/bash
 
 apt -y update
-apt -y install pipx python3 python3-pip
+apt -y install pipx python3 python3-pip python3-dev build-essential libssl-dev libffi-dev python3-setuptools
 ln -s /usr/bin/python3 /usr/bin/python
 
 mkdir -p /opt/secrets
@@ -14,3 +14,5 @@ cd /opt
 git clone https://github.com/launchdarkly-labs/ld-demo-manager.git
 cd ld-demo-manager
 pip install -r requirements.txt --break-system-packages
+pip install wheel
+pip install uwsgi

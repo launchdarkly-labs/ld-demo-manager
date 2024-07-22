@@ -15,4 +15,4 @@ git clone https://github.com/launchdarkly-labs/ld-demo-manager.git
 cd ld-demo-manager
 pip install -r requirements.txt --break-system-packages
 pip install wheel --break-system-packages
-pip install uwsgi --break-system-packages
+pip install gunicorn --break-system-packages

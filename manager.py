@@ -17,12 +17,12 @@ SCOPES = [
 
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 app = Flask(__name__)
-app.config["SESSION_TYPE"] = "memcached"
-# app.config["SESSION_SERIALIZATION_FORMAT"] = "json"
-# app.config["SESSION_CACHELIB"] = (
-#     FileSystemCache(threshold=500, cache_dir="/opt/sessions"),
-# )
-# app.config.from_object(__name__)
+app.config["SESSION_TYPE"] = "cachelib"
+app.config["SESSION_SERIALIZATION_FORMAT"] = "json"
+app.config["SESSION_CACHELIB"] = (
+    FileSystemCache(threshold=500, cache_dir="/opt/sessions"),
+)
+app.config.from_object(__name__)
 Session(app)
 
 

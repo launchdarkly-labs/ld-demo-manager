@@ -16,7 +16,7 @@ SCOPES = [
 ]
 
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
-flask_cache = FileSystemCache(threshold=500)
+flask_cache = FileSystemCache(threshold=500, cache_dir="flask_session")
 app = Flask(__name__)
 app.config["SESSION_TYPE"] = "cachelib"
 app.config["SESSION_SERIALIZATION_FORMAT"] = "json"

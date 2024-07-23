@@ -16,3 +16,4 @@ cd ld-demo-manager
 pip install -r requirements.txt --break-system-packages
 pip install wheel --break-system-packages
 pip install gunicorn --break-system-packages
+pip install cachelib --break-system-packages

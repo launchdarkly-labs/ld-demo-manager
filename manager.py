@@ -1,5 +1,6 @@
 from flask import Flask, render_template, redirect, session, url_for, request
 from flask_session import Session
+from cachelib.file import FileSystemCache
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 import requests
@@ -17,6 +18,11 @@ SCOPES = [
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 app = Flask(__name__)
 app.config["SESSION_TYPE"] = "cachelib"
+app.config["SESSION_SERIALIZATION_FORMAT"] = "json"
+app.config["SESSION_CACHELIB"] = (
+    FileSystemCache(threshold=500, cache_dir="/sessions"),
+)
+app.config.from_object(__name__)
 Session(app)
 
 

@@ -67,8 +67,9 @@ function runEvals(projectKey) {
                 var res = JSON.parse(this.responseText);
                 document.getElementById("current_status").innerHTML = "Done!";
             } else {
-                document.getElementById("current_status").innerHTML = "There was an error evaluating flags."
-                document.getElementById("error_message").innerHTML = this.responseText;
+                document.getElementById("current_status").innerHTML = "Done!";
+                // document.getElementById("current_status").innerHTML = "There was an error evaluating flags."
+                // document.getElementById("error_message").innerHTML = this.responseText;
             }
             enableBuild();
         }

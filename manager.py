@@ -62,7 +62,7 @@ def logout():
     )
     if "credentials" in session:
         session.pop("credentials")
-    if "credentials" in session:
+    if "user" in session:
         session.pop("user")
     if "error" in session:
         session.pop("error")

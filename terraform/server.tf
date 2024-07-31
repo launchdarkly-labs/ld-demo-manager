@@ -85,7 +85,8 @@ data "aws_iam_policy_document" "builder-main-access-doc" {
       "kms:Encrypt",
       "kms:Decrypt",
       "kms:DescribeKey",
-      "s3:*"
+      "s3:*",
+      "dynamodb:*"
     ]
   }
 }

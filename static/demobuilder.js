@@ -10,6 +10,20 @@ function demobuilder(email) {
     document.getElementById("client_id").innerHTML = "";
     document.getElementById("error_message").innerHTML = "";
 
+    customName = document.getElementById("demo-custom-name").value.trim();
+    if (customName != "") {
+        if (customName.length < 15) {
+            if (!document.getElementById("custom-name-error")) {
+                newdiv = document.createElement("div");
+                newdiv.setAttribute("id", "custom-name-error");
+                newdiv.classList.add("notification", "is-danger");
+                document.getElementById("new-demo-content-section").appendChild(newdiv);
+            }
+            document.getElementById("custom-name-error").innerHTML = "Custom name must be at least 15 characters long.";
+            return;
+        }
+    }
+    hideModal("new-demo-dialog");
     var xhr = new XMLHttpRequest();
     var url = "https://2rwthfsr2g4a7uomntrgbkzymq0oxepl.lambda-url.us-east-2.on.aws/";
     document.getElementById("current_status").innerHTML = "Building your demo, please wait...";
@@ -31,7 +45,7 @@ function demobuilder(email) {
             getProjects(email);
         }
     }
-    xhr.send(JSON.stringify({ "action": "build", "email": email }));
+    xhr.send(JSON.stringify({ "action": "build", "email": email, "customName": customName }));
 }
 
 function populateExp(sdkKey, projectKey) {
@@ -140,4 +154,18 @@ function deleteProject(projectKey, index) {
         }
         xhr.send(JSON.stringify({ "action": "cleanup", "project-key": projectKey }));
     }
+}
+
+function showModal(modalId) {
+    var modal = document.getElementById(modalId);
+    modal.classList.add("is-active");
+}
+
+function hideModal(modalId) {
+    if (document.getElementById("custom-name-error")) {
+        document.getElementById("custom-name-error").remove();
+    }
+    document.getElementById("demo-custom-name").value = "";
+    var modal = document.getElementById(modalId);
+    modal.classList.remove("is-active");
 }

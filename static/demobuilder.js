@@ -100,7 +100,7 @@ function disableBuild() {
 function enableBuild() {
     link = document.getElementById("builderlink");
     link.innerHTML = "Build Now";
-    link.onclick = function () { demobuilder(document.getElementById("email").value); };
+    link.onclick = function () { showModal('new-demo-dialog'); return false; };
 }
 
 function getProjects(email) {

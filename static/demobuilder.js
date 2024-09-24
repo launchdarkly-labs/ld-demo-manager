@@ -11,7 +11,15 @@ function demobuilder(email) {
     document.getElementById("error_message").innerHTML = "";
 
     customName = document.getElementById("demo-custom-name").value.trim();
-    demoType = document.getElementById("demotype").value;
+    demoType = null;
+    selDemos = document.getElementsByName("demotype");
+    for (var i = 0; i < selDemos.length; i++) {
+        if (selDemos[i].checked) {
+            demoType = selDemos[i].value;
+        }
+    }
+    alert(demoType);
+    return;
     if (customName != "") {
         if (customName.length < 15) {
             if (!document.getElementById("custom-name-error")) {

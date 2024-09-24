@@ -59,7 +59,7 @@
         </div>
     </section>
     <input type="hidden" id="email" value="{{email}}">
-    <inpyt type="hidden" id="demotype" value="fintech">
+    <inpyt type="hidden" id="selected-demo" value="fintech">
         <div id="new-demo-dialog" class="modal">
             <div class="modal-background" onclick="hideModal('new-demo-dialog');"></div>
             <div class="modal-close" onclick="hideModal('new-demo-dialog');"></div>
@@ -68,12 +68,11 @@
                     <p class="modal-card-title">Demo Environment</p>
                 </header>
                 <section id="new-demo-content-section" class="modal-card-body has-background-black-ter">
-                    <div class="content"><input type="radio" checked id="demo-financial" name="demotype" value="fintech"
-                            onclick="document.getElementById('demotype').value=this.value;alert(document.getElementById('demotype').value);">
+                    <div class="content"><input type="radio" checked id="demo-financial" name="demotype"
+                            value="fintech">
                         <label for="demo-financial">FinTech Demo</label>
                     </div>
-                    <div class="content"><input type="radio" id="demo-general" name="demotype" value="userprofile"
-                            onclick="document.getElementById('demotype').value=this.value;alert(document.getElementById('demotype').value);">
+                    <div class="content"><input type="radio" id="demo-general" name="demotype" value="userprofile">
                         <label for="demo-general">User
                             Profile Demo (coming soon)</label>
                     </div>

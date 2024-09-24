@@ -61,7 +61,7 @@ function demobuilder(email) {
 function populateExp(sdkKey, projectKey) {
     var xhr = new XMLHttpRequest();
     var url = "https://3ucrtyghyspmxp5vxuo27p5kby0dwohk.lambda-url.us-east-2.on.aws/";
-    document.getElementById("current_status").innerHTML = "Populating Experiment with data...";
+    // document.getElementById("current_status").innerHTML = "Populating Experiment with data...";
     xhr.open("POST", url, true);
     xhr.setRequestHeader('Content-type', 'application/json');
     // xhr.onreadystatechange = function () {
@@ -82,7 +82,7 @@ function populateExp(sdkKey, projectKey) {
 function runEvals(projectKey) {
     var xhr = new XMLHttpRequest();
     var url = "https://plit32btpvkcwkmaehdcipmlfy0cwloc.lambda-url.us-east-2.on.aws/";
-    document.getElementById("current_status").innerHTML = "Evaluating flags...";
+    // document.getElementById("current_status").innerHTML = "Evaluating flags...";
     xhr.open("POST", url, true);
     xhr.setRequestHeader('Content-type', 'application/json');
     // xhr.onreadystatechange = function () {

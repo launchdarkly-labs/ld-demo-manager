@@ -34,6 +34,7 @@ function demobuilder(email) {
         if (this.readyState == 4) {
             if (this.status == 200) {
                 var res = JSON.parse(this.responseText);
+                document.getElementById("current_status").innerHTML = "Done!";
                 document.getElementById("project_name").innerHTML = "Project Name: <a class=\"has-text-link-40\" href=\"https://app.launchdarkly.com/projects/" + res.body.projectKey + "/flags\" target=\"_blank\">" + res.body.projectName + "</a>";
                 document.getElementById("client_id").innerHTML = "Client ID: " + res.body.clientId;
                 populateExp(res.body.sdkKey, res.body.projectKey);

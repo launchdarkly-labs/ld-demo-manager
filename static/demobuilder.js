@@ -12,7 +12,7 @@ function demobuilder(email) {
 
     customName = document.getElementById("demo-custom-name").value.trim();
     demoType = null;
-    selDemos = document.getElementsByName("demotype");
+    selDemos = document.getElementsByName("demotyperadio");
     for (var i = 0; i < selDemos.length; i++) {
         if (selDemos[i].checked) {
             demoType = selDemos[i].value;

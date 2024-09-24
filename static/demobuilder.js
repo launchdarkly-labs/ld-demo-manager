@@ -123,9 +123,10 @@ function getProjects(email) {
                     document.getElementById("project_list").innerHTML = "You have no existing projects.";
                 } else {
                     for (var i in items.Items) {
+                        demox = items.Items[i].DemoType ? items.Items[i].DemoType : "FinTech";
                         var tdate = Date.parse(items.Items[i].Created);
                         var infoLink = "<div><a href=\"https://app.launchdarkly.com/projects/" + items.Items[i].ProjectKey + "/flags\" target=\"_blank\">" + items.Items[i].ProjectName + "</a></div>";
-                        var infoDemoType = "<div class=\"pl-5\">Demo Type: " + items.Items[i].DemoType + "</div>";
+                        var infoDemoType = "<div class=\"pl-5\">Demo Type: " + demox + "</div>";
                         var infoDate = "<div class=\"pl-5\">Created: " + new Date(tdate).toLocaleDateString() + " at " + new Date(tdate).toLocaleTimeString() + "</div>";
                         var infoClient = "<div class=\"pl-5\">Client ID: " + items.Items[i].ClientId + "</div>";
                         var infoSdk = "<div class=\"pl-5\">SDK Key: " + items.Items[i].SdkKey + "</div>";

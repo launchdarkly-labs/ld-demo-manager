@@ -32,7 +32,7 @@ function demobuilder(email) {
     }
     hideModal("new-demo-dialog");
     var xhr = new XMLHttpRequest();
-    var url = "https://2rwthfsr2g4a7uomntrgbkzymq0oxepl.lambda-url.us-east-2.on.aws/";
+    var url = "https://cugrwx4wvk4y3jrp462qlrbrzm0zmmuk.lambda-url.us-east-2.on.aws/";
     document.getElementById("current_status").innerHTML = "Building your demo, please wait...";
     disableBuild();
     xhr.open("POST", url, true);

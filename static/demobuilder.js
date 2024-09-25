@@ -47,12 +47,13 @@ function demobuilder(email) {
                 populateExp(res.body.sdkKey, res.body.projectKey);
                 runEvals(projectKey);
                 enableBuild();
+                getProjects(email);
             } else {
                 document.getElementById("current_status").innerHTML = "There was an error building the demo project."
                 document.getElementById("error_message").innerHTML = this.responseText;
                 enableBuild();
+                getProjects(email);
             }
-            getProjects(email);
         }
     }
     xhr.send(JSON.stringify({ "action": "build", "email": email, "customName": customName, "demoType": demoType }));

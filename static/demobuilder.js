@@ -44,10 +44,10 @@ function demobuilder(email) {
                 document.getElementById("current_status").innerHTML = "Done!";
                 document.getElementById("project_name").innerHTML = "Project Name: <a class=\"has-text-link-40\" href=\"https://app.launchdarkly.com/projects/" + res.body.projectKey + "/flags\" target=\"_blank\">" + res.body.projectName + "</a>";
                 document.getElementById("client_id").innerHTML = "Client ID: " + res.body.clientId;
+                getProjects(email);
+                enableBuild();
                 populateExp(res.body.sdkKey, res.body.projectKey);
                 runEvals(projectKey);
-                enableBuild();
-                getProjects(email);
             } else {
                 document.getElementById("current_status").innerHTML = "There was an error building the demo project."
                 document.getElementById("error_message").innerHTML = this.responseText;
@@ -153,7 +153,7 @@ function getProjects(email) {
 function deleteProject(projectKey, index) {
     if (confirm("Are you sure you want to delete this project?")) {
         var xhr = new XMLHttpRequest();
-        var url = "https://2rwthfsr2g4a7uomntrgbkzymq0oxepl.lambda-url.us-east-2.on.aws/";
+        var url = "https://cugrwx4wvk4y3jrp462qlrbrzm0zmmuk.lambda-url.us-east-2.on.aws/";
         document.getElementById("deletebutton" + index).innerHTML = "&nbsp&nbsp&nbsp;Deleting project...";
         xhr.open("POST", url, true);
         xhr.setRequestHeader('Content-type', 'application/json');

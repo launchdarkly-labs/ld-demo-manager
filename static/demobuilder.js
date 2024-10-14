@@ -47,7 +47,7 @@ function demobuilder(email) {
                 getProjects(email);
                 enableBuild();
                 populateExp(res.body.sdkKey, res.body.projectKey);
-                runEvals(projectKey);
+                // runEvals(projectKey);
             } else {
                 document.getElementById("current_status").innerHTML = "There was an error building the demo project."
                 document.getElementById("error_message").innerHTML = this.responseText;

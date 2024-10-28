@@ -46,7 +46,7 @@ function demobuilder(email) {
                 document.getElementById("client_id").innerHTML = "Client ID: " + res.body.clientId;
                 getProjects(email);
                 enableBuild();
-                populateExp(res.body.sdkKey, res.body.projectKey);
+                // populateExp(res.body.sdkKey, res.body.projectKey);
                 // runEvals(projectKey);
             } else {
                 document.getElementById("current_status").innerHTML = "There was an error building the demo project."
@@ -59,48 +59,48 @@ function demobuilder(email) {
     xhr.send(JSON.stringify({ "action": "build", "email": email, "customName": customName, "demoType": demoType }));
 }
 
-function populateExp(sdkKey, projectKey) {
-    var xhr = new XMLHttpRequest();
-    var url = "https://3ucrtyghyspmxp5vxuo27p5kby0dwohk.lambda-url.us-east-2.on.aws/";
-    // document.getElementById("current_status").innerHTML = "Populating Experiment with data...";
-    xhr.open("POST", url, true);
-    xhr.setRequestHeader('Content-type', 'application/json');
-    // xhr.onreadystatechange = function () {
-    //     if (this.readyState == 4) {
-    //         if (this.status == 200) {
-    //             var res = JSON.parse(this.responseText);
-    //             runEvals(projectKey);
-    //         } else {
-    //             document.getElementById("current_status").innerHTML = "There was an error populating the experiment with data."
-    //             document.getElementById("error_message").innerHTML = this.responseText;
-    //             enableBuild();
-    //         }
-    //     }
-    // }
-    xhr.send(JSON.stringify({ "sdk_key": sdkKey, "num_iterations": 1047 }));
-}
+// function populateExp(sdkKey, projectKey) {
+//     var xhr = new XMLHttpRequest();
+//     var url = "https://3ucrtyghyspmxp5vxuo27p5kby0dwohk.lambda-url.us-east-2.on.aws/";
+//     // document.getElementById("current_status").innerHTML = "Populating Experiment with data...";
+//     xhr.open("POST", url, true);
+//     xhr.setRequestHeader('Content-type', 'application/json');
+//     // xhr.onreadystatechange = function () {
+//     //     if (this.readyState == 4) {
+//     //         if (this.status == 200) {
+//     //             var res = JSON.parse(this.responseText);
+//     //             runEvals(projectKey);
+//     //         } else {
+//     //             document.getElementById("current_status").innerHTML = "There was an error populating the experiment with data."
+//     //             document.getElementById("error_message").innerHTML = this.responseText;
+//     //             enableBuild();
+//     //         }
+//     //     }
+//     // }
+//     xhr.send(JSON.stringify({ "sdk_key": sdkKey, "num_iterations": 1047 }));
+// }
 
-function runEvals(projectKey) {
-    var xhr = new XMLHttpRequest();
-    var url = "https://plit32btpvkcwkmaehdcipmlfy0cwloc.lambda-url.us-east-2.on.aws/";
-    // document.getElementById("current_status").innerHTML = "Evaluating flags...";
-    xhr.open("POST", url, true);
-    xhr.setRequestHeader('Content-type', 'application/json');
-    // xhr.onreadystatechange = function () {
-    //     if (this.readyState == 4) {
-    //         if (this.status == 200) {
-    //             var res = JSON.parse(this.responseText);
-    //             document.getElementById("current_status").innerHTML = "Done!";
-    //         } else {
-    //             document.getElementById("current_status").innerHTML = "Done!";
-    //             // document.getElementById("current_status").innerHTML = "There was an error evaluating flags."
-    //             // document.getElementById("error_message").innerHTML = this.responseText;
-    //         }
-    //         enableBuild();
-    //     }
-    // }
-    xhr.send(JSON.stringify({ "project_key": projectKey, "num_iterations": 35 }));
-}
+// function runEvals(projectKey) {
+//     var xhr = new XMLHttpRequest();
+//     var url = "https://plit32btpvkcwkmaehdcipmlfy0cwloc.lambda-url.us-east-2.on.aws/";
+//     // document.getElementById("current_status").innerHTML = "Evaluating flags...";
+//     xhr.open("POST", url, true);
+//     xhr.setRequestHeader('Content-type', 'application/json');
+//     // xhr.onreadystatechange = function () {
+//     //     if (this.readyState == 4) {
+//     //         if (this.status == 200) {
+//     //             var res = JSON.parse(this.responseText);
+//     //             document.getElementById("current_status").innerHTML = "Done!";
+//     //         } else {
+//     //             document.getElementById("current_status").innerHTML = "Done!";
+//     //             // document.getElementById("current_status").innerHTML = "There was an error evaluating flags."
+//     //             // document.getElementById("error_message").innerHTML = this.responseText;
+//     //         }
+//     //         enableBuild();
+//     //     }
+//     // }
+//     xhr.send(JSON.stringify({ "project_key": projectKey, "num_iterations": 35 }));
+// }
 
 function disableBuild() {
     link = document.getElementById("builderlink");

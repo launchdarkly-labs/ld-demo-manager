@@ -9,7 +9,7 @@ resource "aws_instance" "builder-server" {
   user_data = templatefile("${path.module}/scripts/install.sh", {
     AWS_REGION        = var.aws_region
     LD_API_KEY        = var.ld_api_key
-    GOOGLE_CREDS      = var.google_credentials
+    GOOGLE_CREDS      = base64encode(var.google_credentials)
     FLASK_SESSION_KEY = var.flask_session_key
   })
 

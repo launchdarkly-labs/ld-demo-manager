@@ -110,3 +110,13 @@ resource "aws_iam_instance_profile" "builder-main-profile" {
   name = "${var.unique_identifier}-access-profile"
   role = aws_iam_role.builder-main-access-role.name
 }
+
+data "aws_iam_policy" "awssh-login-policy" {
+  name = "ec2-service-solutions-engineering"
+}
+
+resource "aws_iam_role_policy_attachment" "awssh-login-policy-attach" {
+  policy_arn = data.aws_iam_policy.awssh-login-policy.arn
+  role       = aws_iam_role.builder-main-access-role.name
+}
+
